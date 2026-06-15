@@ -8,6 +8,7 @@
 
 from types import SimpleNamespace
 
+import pandas as pd
 import pytest
 
 from seigov import SeiClient, SeiError
@@ -75,3 +76,21 @@ def test_consultar_procedimentos_lote_isola_erro(sei):
     assert list(df["protocolo"]) == ["0000000000.000001/2020-11", "BAD"]
     bad = df[df["protocolo"] == "BAD"].iloc[0]
     assert bad["erro"] is not None
+
+
+def test_listar_documentos_processo_extrai(sei, monkeypatch):
+    tl = pd.DataFrame([
+        {"Descricao": "Processo gerado", "DataHora": "07/04/2026 10:00:00",
+         "Unidade_Sigla": "A", "Usuario_Sigla": "u1"},
+        {"Descricao": "Gerado documento restrito 84230597 (X)",
+         "DataHora": "07/04/2026 11:00:00", "Unidade_Sigla": "A", "Usuario_Sigla": "u1"},
+        {"Descricao": "Assinado Documento 84230597 (X)",
+         "DataHora": "07/04/2026 12:00:00", "Unidade_Sigla": "A", "Usuario_Sigla": "u2"},
+        {"Descricao": "Gerado documento restrito 84245389 (Y)",
+         "DataHora": "07/04/2026 13:00:00", "Unidade_Sigla": "A", "Usuario_Sigla": "u1"},
+    ])
+    monkeypatch.setattr(sei, "listar_andamentos_completo", lambda *a, **k: tl)
+    docs = sei.listar_documentos_processo("12.1.0-4")
+    # dedup, mantém a 1a ocorrência (geração)
+    assert list(docs["documento"]) == ["84230597", "84245389"]
+    assert docs.iloc[0]["Usuario_Sigla"] == "u1"  # gerou, não quem assinou
