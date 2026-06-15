@@ -1,0 +1,50 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "seigov"
+version = "0.1.0"
+description = "Cliente Python para os Web Services SOAP do SEI (Sistema Eletronico de Informacoes) e do SIP"
+readme = "README.md"
+requires-python = ">=3.9"
+license = "GPL-3.0-or-later"
+authors = [
+  { name = "Andre Leite", email = "leite@castlab.org" },
+  { name = "Marcos Wasilew", email = "marcos.wasilew@gmail.com" },
+  { name = "Hugo Vasconcelos", email = "hugo.vasconcelos@ufpe.br" },
+  { name = "Carlos Amorin", email = "carlos.agaf@ufpe.br" },
+  { name = "Diogo Bezerra", email = "diogo.bezerra@ufpe.br" },
+  { name = "Julia Nascimento Barreto", email = "juliabarreto@gd.seplag.pe.gov.br" },
+]
+keywords = ["sei", "sip", "soap", "zeep", "govbr", "processo-eletronico"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Topic :: Office/Business",
+]
+dependencies = [
+  "zeep>=4.2",
+  "pandas>=1.5",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7", "pytest-mock>=3", "build", "ruff"]
+
+[project.urls]
+Homepage = "https://github.com/StrategicProjects/seigov"
+Issues = "https://github.com/StrategicProjects/seigov/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/seigov"]
+
+# Garante que os WSDL empacotados entrem no wheel/sdist
+[tool.hatch.build.targets.wheel.force-include]
+"src/seigov/wsdl" = "seigov/wsdl"
+
+[tool.hatch.build.targets.sdist]
+include = ["src/seigov", "tests", "README.md", "LICENSE", "pyproject.toml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
