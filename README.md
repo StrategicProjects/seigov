@@ -1,5 +1,11 @@
 # seigov <a href="https://github.com/StrategicProjects/seigov"><img src="https://raw.githubusercontent.com/StrategicProjects/seigov/main/docs/seigovHex.svg" align="right" height="130" alt="seigov logo" /></a>
 
+[![CI](https://github.com/StrategicProjects/seigov/actions/workflows/ci.yml/badge.svg)](https://github.com/StrategicProjects/seigov/actions/workflows/ci.yml)
+[![PyPI](https://img.shields.io/pypi/v/seigov.svg)](https://pypi.org/project/seigov/)
+[![Docs](https://img.shields.io/badge/docs-mkdocs-blue.svg)](https://strategicprojects.github.io/seigov/)
+
+📖 **Documentação:** <https://strategicprojects.github.io/seigov/>
+
 Cliente Python para os **Web Services SOAP do SEI** (Sistema Eletrônico de
 Informações) e do **SIP** (Sistema de Permissões). Construído sobre
 [`zeep`](https://docs.python-zeep.org/), devolve os resultados como

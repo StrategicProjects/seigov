@@ -35,6 +35,7 @@ docs = ["mkdocs-material>=9", "mkdocstrings[python]>=0.24"]
 
 [project.urls]
 Homepage = "https://github.com/StrategicProjects/seigov"
+Documentation = "https://strategicprojects.github.io/seigov/"
 Issues = "https://github.com/StrategicProjects/seigov/issues"
 
 [tool.hatch.build.targets.wheel]
