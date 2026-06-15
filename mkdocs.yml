@@ -1,0 +1,56 @@
+site_name: seigov
+site_description: Cliente Python (zeep) para os Web Services SOAP do SEI e do SIP
+site_url: https://strategicprojects.github.io/seigov/
+repo_url: https://github.com/StrategicProjects/seigov
+repo_name: StrategicProjects/seigov
+copyright: Desenvolvido por André Leite e colaboradores
+
+theme:
+  name: material
+  language: pt
+  logo: seigovHex.svg
+  favicon: seigovHex.svg
+  palette:
+    - scheme: default
+      primary: teal
+      accent: teal
+      toggle:
+        icon: material/weather-night
+        name: Modo escuro
+    - scheme: slate
+      primary: teal
+      accent: teal
+      toggle:
+        icon: material/weather-sunny
+        name: Modo claro
+  features:
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - search.suggest
+
+nav:
+  - Início: index.md
+  - Uso: uso.md
+  - Referência da API: referencia.md
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: numpy
+            show_source: false
+            show_root_heading: true
+            members_order: source
+            separate_signature: true
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - toc:
+      permalink: true

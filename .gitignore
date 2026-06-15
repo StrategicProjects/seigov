@@ -22,3 +22,6 @@ CLAUDE.md
 
 # OS
 .DS_Store
+
+# mkdocs build
+site/
