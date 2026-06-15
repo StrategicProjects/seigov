@@ -1,4 +1,4 @@
-# seigov
+# seigov <a href="https://github.com/StrategicProjects/seigov"><img src="https://raw.githubusercontent.com/StrategicProjects/seigov/main/docs/seigovHex.svg" align="right" height="130" alt="seigov logo" /></a>
 
 Cliente Python para os **Web Services SOAP do SEI** (Sistema Eletrônico de
 Informações) e do **SIP** (Sistema de Permissões). Construído sobre
