@@ -12,15 +12,19 @@ import pandas as pd
 
 
 def _serialize(obj: Any) -> Any:
-    """Converte objetos zeep em dict/list nativos; passa dict/list adiante."""
-    if obj is None or isinstance(obj, (dict, list)):
+    """Converte objetos zeep (e listas deles) em dict/list nativos.
+
+    Importante: ``serialize_object`` é recursivo — precisa ser aplicado também
+    quando ``obj`` é uma lista de objetos zeep (ex.: o array de unidades), senão
+    os elementos continuam sendo objetos e o ``json_normalize`` não acha colunas.
+    """
+    if obj is None:
         return obj
     try:
         from zeep.helpers import serialize_object
-
-        return serialize_object(obj)
-    except Exception:  # pragma: no cover - zeep ausente / objeto simples
+    except Exception:  # pragma: no cover - zeep ausente: assume ja serializado
         return obj
+    return serialize_object(obj)
 
 
 def to_dataframe(obj: Any, *, sep: str = "_") -> pd.DataFrame:
