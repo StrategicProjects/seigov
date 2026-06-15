@@ -78,3 +78,22 @@ class SipClient:
             IdPerfil=id_perfil,
         )
         return rec if raw else to_dataframe(rec)
+
+    def replicar_permissao(self, permissoes: list):
+        """Replica (cadastra/altera/exclui) permissões (``replicarPermissao``).
+
+        ``permissoes``: lista de dicts da estrutura ``Permissao`` (ao menos
+        ``StaOperacao``, ``IdSistema``, ``IdPerfil``).
+        """
+        return self.call("replicarPermissao", Permissoes=permissoes)
+
+    def replicar_usuario(self, usuarios: list, *, considerar_orgao: bool = False):
+        """Replica (cadastra/altera/desativa/reativa) usuários (``replicarUsuario``).
+
+        ``usuarios``: lista de dicts (ao menos ``StaOperacao`` e ``IdOrigem``).
+        """
+        return self.call(
+            "replicarUsuario",
+            Usuarios=usuarios,
+            SinConsiderarOrgao="S" if considerar_orgao else "N",
+        )

@@ -11,7 +11,7 @@ o pacote utilizável com **qualquer** instalação do SEI.
 from __future__ import annotations
 
 import re
-from typing import Any, Iterable, Optional, Sequence
+from typing import Any, Optional
 
 import pandas as pd
 
@@ -442,11 +442,11 @@ class SeiClient:
                     unidades_disponibilizacao=None, documentos=None,
                     disponibilizar=False):
         """Gera um bloco (``gerarBloco``). Retorna o número do bloco."""
+        unidades = [str(u) for u in (unidades_disponibilizacao or [])]
+        docs = [str(d) for d in (documentos or [])]
         return self.call("gerarBloco", IdUnidade=self._un(id_unidade), Tipo=tipo,
-                         Descricao=descricao,
-                         UnidadesDisponibilizacao=[str(u) for u in (unidades_disponibilizacao or [])],
-                         Documentos=[str(d) for d in (documentos or [])],
-                         SinDisponibilizar=encode_sin(disponibilizar))
+                         Descricao=descricao, UnidadesDisponibilizacao=unidades,
+                         Documentos=docs, SinDisponibilizar=encode_sin(disponibilizar))
 
     def incluir_documento_bloco(self, id_bloco, protocolo_documento, *, id_unidade=None,
                                 anotacao=""):
