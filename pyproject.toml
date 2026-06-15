@@ -38,10 +38,7 @@ Issues = "https://github.com/StrategicProjects/seigov/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/seigov"]
-
-# Garante que os WSDL empacotados entrem no wheel/sdist
-[tool.hatch.build.targets.wheel.force-include]
-"src/seigov/wsdl" = "seigov/wsdl"
+# Os arquivos .wsdl dentro de src/seigov/ são incluídos automaticamente.
 
 [tool.hatch.build.targets.sdist]
 include = ["src/seigov", "tests", "README.md", "LICENSE", "pyproject.toml"]
