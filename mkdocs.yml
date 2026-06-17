@@ -32,6 +32,7 @@ theme:
 nav:
   - Início: index.md
   - Uso: uso.md
+  - Solicitando acesso: solicitando-acesso.md
   - Referência da API: referencia.md
 
 plugins:
