@@ -59,6 +59,9 @@ sei.consultar_documentos(["0003934", "0003935"])
 # linha do tempo completa, ordenada por data/hora
 sei.listar_andamentos_completo("12.1.000000077-4")
 
+# eventos de marcador do processo (texto, data/hora, usuário e marcador)
+sei.listar_andamentos_marcadores("12.1.000000077-4")
+
 # documentos do processo (reconstruídos a partir dos andamentos)
 sei.listar_documentos_processo("12.1.000000077-4")
 

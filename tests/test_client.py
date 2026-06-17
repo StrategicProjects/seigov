@@ -78,6 +78,36 @@ def test_consultar_procedimentos_lote_isola_erro(sei):
     assert bad["erro"] is not None
 
 
+def test_listar_andamentos_marcadores_mockado(sei):
+    captured = {}
+
+    def fake(**kw):
+        captured.update(kw)
+        return [
+            {"IdAndamentoMarcador": "501", "Texto": "Aguardando parecer",
+             "DataHora": "07/04/2026 11:20:00",
+             "Usuario": {"IdUsuario": "1", "Sigla": "usuario.um", "Nome": "Usuario Um"},
+             "Marcador": {"IdMarcador": "10", "Nome": "Urgente", "SinAtivo": "S"}},
+            {"IdAndamentoMarcador": "502", "Texto": "Conferido",
+             "DataHora": "07/04/2026 16:05:00",
+             "Usuario": {"IdUsuario": "2", "Sigla": "usuario.dois", "Nome": "Usuario Dois"},
+             "Marcador": {"IdMarcador": "20", "Nome": "Revisado", "SinAtivo": "S"}},
+        ]
+
+    sei._service = SimpleNamespace(listarAndamentosMarcadores=fake)
+    df = sei.listar_andamentos_marcadores("12.1.0-4", id_unidade="1",
+                                          marcadores=["10", "20"])
+
+    # parâmetros montados corretamente (Marcadores vira lista de strings)
+    assert captured["SiglaSistema"] == "SIG"
+    assert captured["ProtocoloProcedimento"] == "12.1.0-4"
+    assert captured["Marcadores"] == ["10", "20"]
+    # DataFrame achatado: Usuario_*/Marcador_* viram colunas
+    assert list(df["IdAndamentoMarcador"]) == ["501", "502"]
+    assert df.loc[0, "Marcador_Nome"] == "Urgente"
+    assert df.loc[0, "Usuario_Sigla"] == "usuario.um"
+
+
 def test_listar_documentos_processo_extrai(sei, monkeypatch):
     tl = pd.DataFrame([
         {"Descricao": "Processo gerado", "DataHora": "07/04/2026 10:00:00",
