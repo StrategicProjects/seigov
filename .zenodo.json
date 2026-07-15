@@ -1,0 +1,43 @@
+{
+  "title": "seigov: a Python client for the SEI and SIP SOAP Web Services",
+  "description": "<p>seigov is a generic Python client for the SOAP Web Services of the SEI (Sistema Eletronico de Informacoes) and SIP (Sistema de Permissoes) e-government platforms. Built on zeep, it returns results as pandas DataFrames and works with any SEI installation by pointing it at the endpoint of your own Web Service. It covers queries, listings, write operations, SIP permissions, and batch/per-process helpers. It is the Python port of the R package rsei.</p>",
+  "upload_type": "software",
+  "license": "GPL-3.0-or-later",
+  "creators": [
+    {
+      "name": "Leite, André",
+      "affiliation": "Universidade Federal de Pernambuco"
+    },
+    {
+      "name": "Vasconcelos, Hugo",
+      "affiliation": "Universidade Federal de Pernambuco"
+    },
+    {
+      "name": "Bezerra, Diogo",
+      "affiliation": "Universidade Federal de Pernambuco"
+    },
+    {
+      "name": "Wasiliew, Marcos"
+    },
+    {
+      "name": "Amorim, Carlos",
+      "affiliation": "Universidade Federal de Pernambuco"
+    },
+    {
+      "name": "Nascimento Barreto, Julia"
+    }
+  ],
+  "keywords": ["sei", "sip", "soap", "zeep", "govbr", "processo-eletronico"],
+  "related_identifiers": [
+    {
+      "relation": "isSupplementTo",
+      "identifier": "https://pypi.org/project/seigov/",
+      "resource_type": "software"
+    },
+    {
+      "relation": "isDerivedFrom",
+      "identifier": "https://github.com/StrategicProjects/rsei",
+      "resource_type": "software"
+    }
+  ]
+}

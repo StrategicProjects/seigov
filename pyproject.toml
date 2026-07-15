@@ -4,17 +4,17 @@ build-backend = "hatchling.build"
 
 [project]
 name = "seigov"
-version = "0.1.0"
+version = "0.1.1"
 description = "Cliente Python para os Web Services SOAP do SEI (Sistema Eletronico de Informacoes) e do SIP"
 readme = "README.md"
 requires-python = ">=3.9"
 license = "GPL-3.0-or-later"
 authors = [
-  { name = "Andre Leite", email = "leite@castlab.org" },
-  { name = "Marcos Wasilew", email = "marcos.wasilew@gmail.com" },
+  { name = "André Leite", email = "leite@castlab.org" },
   { name = "Hugo Vasconcelos", email = "hugo.vasconcelos@ufpe.br" },
-  { name = "Carlos Amorin", email = "carlos.agaf@ufpe.br" },
   { name = "Diogo Bezerra", email = "diogo.bezerra@ufpe.br" },
+  { name = "Marcos Wasiliew", email = "marcos.wasilew@gmail.com" },
+  { name = "Carlos Amorim", email = "carlos.agaf@ufpe.br" },
   { name = "Julia Nascimento Barreto", email = "juliabarreto@gd.seplag.pe.gov.br" },
 ]
 keywords = ["sei", "sip", "soap", "zeep", "govbr", "processo-eletronico"]

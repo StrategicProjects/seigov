@@ -25,7 +25,7 @@ from .exceptions import SeiError, SeiFault
 from .parse import to_dataframe
 from .sip import SipClient
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 __all__ = [
     "SeiClient",
