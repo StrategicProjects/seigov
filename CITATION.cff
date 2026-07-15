@@ -5,6 +5,7 @@ title: "seigov: a Python client for the SEI and SIP SOAP Web Services"
 version: 0.1.1
 date-released: 2026-07-14
 license: GPL-3.0-or-later
+doi: 10.5281/zenodo.21366663
 repository-code: "https://github.com/StrategicProjects/seigov"
 url: "https://strategicprojects.github.io/seigov/"
 keywords:

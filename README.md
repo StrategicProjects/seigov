@@ -3,6 +3,7 @@
 [![CI](https://github.com/StrategicProjects/seigov/actions/workflows/ci.yml/badge.svg)](https://github.com/StrategicProjects/seigov/actions/workflows/ci.yml)
 [![PyPI](https://img.shields.io/pypi/v/seigov.svg)](https://pypi.org/project/seigov/)
 [![Docs](https://img.shields.io/badge/docs-mkdocs-blue.svg)](https://strategicprojects.github.io/seigov/)
+[![DOI](https://zenodo.org/badge/1270529372.svg)](https://doi.org/10.5281/zenodo.21366663)
 
 📖 **Documentação:** <https://strategicprojects.github.io/seigov/>
 
