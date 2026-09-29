@@ -15,7 +15,7 @@ authors = [
   { name = "Diogo Bezerra", email = "diogo.bezerra@ufpe.br" },
   { name = "Marcos Wasiliew", email = "marcos.wasiliew@gmail.com" },
   { name = "Carlos Amorim", email = "carlos.agaf@ufpe.br" },
-  { name = "Julia Nascimento Barreto", email = "juliabarreto@gd.seplag.pe.gov.br" },
+  { name = "Júlia Nascimento Barreto", email = "juliabarreto@gd.seplag.pe.gov.br" },
 ]
 keywords = ["sei", "sip", "soap", "zeep", "govbr", "processo-eletronico"]
 classifiers = [
