@@ -124,3 +124,41 @@ def test_listar_documentos_processo_extrai(sei, monkeypatch):
     # dedup, mantém a 1a ocorrência (geração)
     assert list(docs["documento"]) == ["84230597", "84245389"]
     assert docs.iloc[0]["Usuario_Sigla"] == "u1"  # gerou, não quem assinou
+
+
+def test_enviar_email_params_sei5_mockado(sei):
+    captured = {}
+
+    def fake(**kw):
+        captured.update(kw)
+        return "1"
+
+    sei._service = SimpleNamespace(enviarEmail=fake)
+    sei.enviar_email("12.1.0-4", "a@x", ["b@x", "c@x"], "s", "m", id_unidade="1",
+                     nivel_acesso=1, id_hipotese_legal=7, raw=True)
+    assert captured["Para"] == "b@x;c@x"
+    assert captured["NivelAcesso"] == "1"
+    assert captured["IdHipoteseLegal"] == "7"
+
+    # omitidos -> nao entram na requisicao (compatibilidade SEI 4)
+    captured.clear()
+    sei.enviar_email("12.1.0-4", "a@x", "b@x", "s", "m", id_unidade="1", raw=True)
+    assert "NivelAcesso" not in captured
+    assert "IdHipoteseLegal" not in captured
+
+
+def test_alterar_bloco_mockado(sei):
+    captured = {}
+
+    def fake(**kw):
+        captured.update(kw)
+        return True
+
+    sei._service = SimpleNamespace(alterarBloco=fake)
+    ok = sei.alterar_bloco("55", "Nova descricao", id_unidade="1",
+                           unidades_disponibilizacao=[110, 120])
+    assert ok is True
+    assert captured["SiglaSistema"] == "SIG"
+    assert captured["IdBloco"] == "55"
+    assert captured["Descricao"] == "Nova descricao"
+    assert captured["UnidadesDisponibilizacao"] == ["110", "120"]

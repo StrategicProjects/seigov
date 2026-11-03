@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "seigov"
-version = "0.1.1"
+version = "0.1.2"
 description = "Cliente Python para os Web Services SOAP do SEI (Sistema Eletronico de Informacoes) e do SIP"
 readme = "README.md"
 requires-python = ">=3.9"

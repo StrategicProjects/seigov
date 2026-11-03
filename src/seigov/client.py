@@ -422,14 +422,26 @@ class SeiClient:
                          ProtocoloDocumento=protocolo_documento)
 
     def enviar_email(self, protocolo_procedimento, de, para, assunto, mensagem, *,
-                     id_unidade=None, cco=None, id_documentos=None, raw=False):
-        """Envia e-mail vinculado a um processo (``enviarEmail``)."""
+                     id_unidade=None, cco=None, id_documentos=None,
+                     nivel_acesso=None, id_hipotese_legal=None, raw=False):
+        """Envia e-mail vinculado a um processo (``enviarEmail``).
+
+        ``nivel_acesso`` ("0" público, "1" restrito, "2" sigiloso) e
+        ``id_hipotese_legal`` são parâmetros opcionais do SEI 5; quando
+        omitidos a requisição é idêntica à do SEI 4.
+        """
         join = lambda x: ";".join(x) if isinstance(x, (list, tuple)) else x
+        extra = {}
+        if nivel_acesso is not None:
+            extra["NivelAcesso"] = str(nivel_acesso)
+        if id_hipotese_legal is not None:
+            extra["IdHipoteseLegal"] = str(id_hipotese_legal)
         rec = self.call("enviarEmail", IdUnidade=self._un(id_unidade),
                         ProtocoloProcedimento=protocolo_procedimento, De=de,
                         Para=join(para), CCO=join(cco) if cco else "",
                         Assunto=assunto, Mensagem=mensagem,
-                        IdDocumentos=[str(d) for d in (id_documentos or [])])
+                        IdDocumentos=[str(d) for d in (id_documentos or [])],
+                        **extra)
         return self._df(rec, raw)
 
     def atualizar_contatos(self, contatos, *, id_unidade=None):
@@ -447,6 +459,15 @@ class SeiClient:
         return self.call("gerarBloco", IdUnidade=self._un(id_unidade), Tipo=tipo,
                          Descricao=descricao, UnidadesDisponibilizacao=unidades,
                          Documentos=docs, SinDisponibilizar=encode_sin(disponibilizar))
+
+    def alterar_bloco(self, id_bloco, descricao, *, id_unidade=None,
+                      unidades_disponibilizacao=None):
+        """Altera a descrição e as unidades de disponibilização de um bloco
+        existente (``alterarBloco``; operação disponível a partir do SEI 5)."""
+        unidades = [str(u) for u in (unidades_disponibilizacao or [])]
+        return self.call("alterarBloco", IdUnidade=self._un(id_unidade),
+                         IdBloco=id_bloco, Descricao=descricao,
+                         UnidadesDisponibilizacao=unidades)
 
     def incluir_documento_bloco(self, id_bloco, protocolo_documento, *, id_unidade=None,
                                 anotacao=""):

@@ -23,6 +23,14 @@
         </xsd:all>
       </xsd:complexType>
 
+      <xsd:complexType name="ArrayOfString">
+        <xsd:complexContent>
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="xsd:string[]" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
       <xsd:complexType name="ArrayOfUsuarios">
         <xsd:complexContent>
           <xsd:restriction base="SOAP-ENC:Array">
@@ -109,6 +117,7 @@
         </xsd:all>
       </xsd:complexType>
 
+
       <xsd:complexType name="ArrayOfNomeRecurso">
         <xsd:complexContent>
           <xsd:restriction base="SOAP-ENC:Array">
@@ -133,6 +142,14 @@
         </xsd:complexContent>
       </xsd:complexType>
 
+      <xsd:complexType name="ArrayOfIdSistema">
+        <xsd:complexContent>
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="xsd:string[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
     </xsd:schema>
   </wsdl:types>
 
@@ -146,6 +163,49 @@
 
   <wsdl:message name="validarLoginResponse">
     <wsdl:part name="returnLogin"/>
+  </wsdl:message>
+
+  <wsdl:message name="validarLoginSsoRequest">
+    <wsdl:part name="ChaveAcesso" type="xsd:string"/>
+    <wsdl:part name="IdLoginSso" type="xsd:string"/>
+  </wsdl:message>
+
+  <wsdl:message name="validarLoginSsoResponse">
+    <wsdl:part name="returnLoginSso"/>
+  </wsdl:message>
+
+  <wsdl:message name="obterLoginSsoRequest">
+    <wsdl:part name="ChaveAcesso" type="xsd:string"/>
+    <wsdl:part name="IdentificacaoServicoSso" type="xsd:string"/>
+    <wsdl:part name="SiglaOrgaoSistema" type="xsd:string"/>
+    <wsdl:part name="SiglaSistema" type="xsd:string"/>
+    <wsdl:part name="UrlRetornoLogin" type="xsd:string"/>
+    <wsdl:part name="UrlRetornoLogout" type="xsd:string"/>
+    <wsdl:part name="BolBotaoCompleto" type="xsd:string"/>
+  </wsdl:message>
+
+  <wsdl:message name="obterLoginSsoResponse">
+    <wsdl:part name="returnFormularioLoginSso"/>
+  </wsdl:message>
+
+  <wsdl:message name="obterUrlAssinaturaSsoRequest">
+    <wsdl:part name="ChaveAcesso" type="xsd:string"/>
+  </wsdl:message>
+
+  <wsdl:message name="obterUrlAssinaturaSsoResponse">
+    <wsdl:part name="returnObterUrlAssinaturaSso"/>
+  </wsdl:message>
+
+  <wsdl:message name="obterLogoutSsoRequest">
+    <wsdl:part name="ChaveAcesso" type="xsd:string"/>
+    <wsdl:part name="IdLoginSso" type="xsd:string"/>
+    <wsdl:part name="SiglaOrgaoSistema" type="xsd:string"/>
+    <wsdl:part name="SiglaSistema" type="xsd:string"/>
+    <wsdl:part name="BolUrl" type="xsd:string"/>
+  </wsdl:message>
+
+  <wsdl:message name="obterLogoutSsoResponse">
+    <wsdl:part name="returnUrlLogoutSso"/>
   </wsdl:message>
 
   <wsdl:message name="loginUnificadoRequest">
@@ -209,6 +269,19 @@
     <wsdl:part name="returnUsuarios"/>
   </wsdl:message>
 
+  <wsdl:message name="carregarUsuariosSemPermissaoRequest">
+    <wsdl:part name="ChaveAcesso" type="xsd:string"/>
+    <wsdl:part name="IdSistema" type="xsd:long"/>
+    <wsdl:part name="IdOrgaoUsuario" type="xsd:string"/>
+    <wsdl:part name="IdUsuario" type="xsd:string"/>
+    <wsdl:part name="IdOrigemUsuario" type="xsd:string"/>
+    <wsdl:part name="SiglaUsuario" type="xsd:string"/>
+  </wsdl:message>
+
+  <wsdl:message name="carregarUsuariosSemPermissaoResponse">
+    <wsdl:part name="returnUsuarios"/>
+  </wsdl:message>
+
   <wsdl:message name="carregarUsuarioRequest">
     <wsdl:part name="ChaveAcesso" type="xsd:string"/>
     <wsdl:part name="IdSistema" type="xsd:string"/>
@@ -254,13 +327,14 @@
   </wsdl:message>
 
   <wsdl:message name="listarAcessosResponse">
-    <wsdl:part name="Acessos" type="tns:ArrayOfAcessos"/>
+    <wsdl:part name="Acessos" type="tns:ArrayOfAcesso"/>
   </wsdl:message>
 
   <wsdl:message name="replicarUsuarioRequest">
     <wsdl:part name="ChaveAcesso" type="xsd:string"/>
     <wsdl:part name="Usuarios" type="tns:ArrayOfUsuarios"/>
     <wsdl:part name="SinConsiderarOrgao" type="xsd:string"/>
+    <wsdl:part name="SistemasReplicacao" type="tns:ArrayOfIdSistema"/>
   </wsdl:message>
 
   <wsdl:message name="replicarUsuarioResponse">
@@ -371,6 +445,27 @@
       <wsdl:output message="tns:validarLoginResponse"/>
     </wsdl:operation>
 
+    <wsdl:operation name="validarLoginSso">
+      <wsdl:input message="tns:validarLoginSsoRequest"/>
+      <wsdl:output message="tns:validarLoginSsoResponse"/>
+    </wsdl:operation>
+
+    <wsdl:operation name="obterLoginSso">
+      <wsdl:input message="tns:obterLoginSsoRequest"/>
+      <wsdl:output message="tns:obterLoginSsoResponse"/>
+    </wsdl:operation>
+
+    <wsdl:operation name="obterUrlAssinaturaSso">
+      <wsdl:input message="tns:obterUrlAssinaturaSsoRequest"/>
+      <wsdl:output message="tns:obterUrlAssinaturaSsoResponse"/>
+    </wsdl:operation>
+
+
+    <wsdl:operation name="obterLogoutSso">
+      <wsdl:input message="tns:obterLogoutSsoRequest"/>
+      <wsdl:output message="tns:obterLogoutSsoResponse"/>
+    </wsdl:operation>
+
     <wsdl:operation name="loginUnificado">
       <wsdl:input message="tns:loginUnificadoRequest"/>
       <wsdl:output message="tns:loginUnificadoResponse"/>
@@ -394,6 +489,11 @@
     <wsdl:operation name="carregarUsuarios">
       <wsdl:input message="tns:carregarUsuariosRequest"/>
       <wsdl:output message="tns:carregarUsuariosResponse"/>
+    </wsdl:operation>
+
+    <wsdl:operation name="carregarUsuariosSemPermissao">
+      <wsdl:input message="tns:carregarUsuariosSemPermissaoRequest"/>
+      <wsdl:output message="tns:carregarUsuariosSemPermissaoResponse"/>
     </wsdl:operation>
 
     <wsdl:operation name="carregarUsuario">
@@ -475,6 +575,47 @@
       </wsdl:output>
     </wsdl:operation>
 
+    <wsdl:operation name="validarLoginSso">
+      <soap:operation soapAction="sipnsAction"/>
+      <wsdl:input>
+        <soap:body namespace="sipns" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body namespace="sipns" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="obterUrlAssinaturaSso">
+      <soap:operation soapAction="sipnsAction"/>
+      <wsdl:input>
+        <soap:body namespace="sipns" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body namespace="sipns" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="obterLoginSso">
+      <soap:operation soapAction="sipnsAction"/>
+      <wsdl:input>
+        <soap:body namespace="sipns" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body namespace="sipns" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+
+    <wsdl:operation name="obterLogoutSso">
+      <soap:operation soapAction="sipnsAction"/>
+      <wsdl:input>
+        <soap:body namespace="sipns" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body namespace="sipns" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </wsdl:output>
+    </wsdl:operation>
+
     <wsdl:operation name="loginUnificado">
       <soap:operation soapAction="sipnsAction"/>
       <wsdl:input>
@@ -516,6 +657,16 @@
     </wsdl:operation>
 
     <wsdl:operation name="carregarUsuarios">
+      <soap:operation soapAction="sipnsAction"/>
+      <wsdl:input>
+        <soap:body namespace="sipns" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body namespace="sipns" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="carregarUsuariosSemPermissao">
       <soap:operation soapAction="sipnsAction"/>
       <wsdl:input>
         <soap:body namespace="sipns" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
@@ -659,7 +810,7 @@
 
   <wsdl:service name="sipService">
     <wsdl:port name="sipPortType" binding="tns:sipBinding">
-      <soap:address location="https://sip.pe.gov.br/sip/ws/SipWS.php"/>
+      <soap:address location="https://sei.pe.gov.br/sip/ws/SipWS.php"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

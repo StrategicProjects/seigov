@@ -132,6 +132,7 @@
         <xsd:all>
           <xsd:element name="IdTipoProcedimento" type="xsd:string"/>
           <xsd:element name="Nome" type="xsd:string"/>
+          <xsd:element name="SinOuvidoriaAnonimo" type="xsd:string" minOccurs="0"/>
         </xsd:all>
       </xsd:complexType>
 
@@ -896,6 +897,23 @@
         </xsd:complexContent>
       </xsd:complexType>
 
+      <xsd:complexType name="Anexo">
+        <xsd:all>
+          <xsd:element name="IdAnexo" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="Nome" type="xsd:string"/>
+          <xsd:element name="DataHora" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="Tamanho" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="Conteudo" type="xsd:string"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="ArrayOfAnexo">
+        <xsd:complexContent>
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:Anexo[]" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
 
     </xsd:schema>
   </wsdl:types>
@@ -1095,6 +1113,19 @@
   </wsdl:message>
 
   <wsdl:message name="gerarBlocoResponse">
+    <wsdl:part name="parametros" type="xsd:string"/>
+  </wsdl:message>
+
+  <wsdl:message name="alterarBlocoRequest">
+    <wsdl:part name="SiglaSistema" type="xsd:string"/>
+    <wsdl:part name="IdentificacaoServico" type="xsd:string"/>
+    <wsdl:part name="IdUnidade" type="xsd:string"/>
+    <wsdl:part name="IdBloco" type="xsd:string"/>
+    <wsdl:part name="Descricao" type="xsd:string"/>
+    <wsdl:part name="UnidadesDisponibilizacao" type="tns:ArrayOfIdUnidade"/>
+  </wsdl:message>
+
+  <wsdl:message name="alterarBlocoResponse">
     <wsdl:part name="parametros" type="xsd:string"/>
   </wsdl:message>
 
@@ -1726,6 +1757,8 @@
     <wsdl:part name="Assunto" type="xsd:string"/>
     <wsdl:part name="Mensagem" type="xsd:string"/>
     <wsdl:part name="IdDocumentos" type="tns:ArrayOfIdDocumento"/>
+    <wsdl:part name="NivelAcesso" type="xsd:string" />
+    <wsdl:part name="IdHipoteseLegal" type="xsd:string" />
   </wsdl:message>
 
   <wsdl:message name="enviarEmailResponse">
@@ -1750,6 +1783,9 @@
     <wsdl:part name="SinRetorno" type="xsd:string" />
     <wsdl:part name="Mensagem" type="xsd:string" />
     <wsdl:part name="AtributosAdicionais" type="tns:ArrayOfAtributoOuvidoria"/>
+    <wsdl:part name="SinAnonimo" type="xsd:string" />
+    <wsdl:part name="SinSigilo" type="xsd:string" />
+    <wsdl:part name="Anexos" type="tns:ArrayOfAnexo"/>
   </wsdl:message>
 
   <wsdl:message name="registrarOuvidoriaResponse">
@@ -1840,6 +1876,12 @@
       <wsdl:documentation>Geracao de bloco</wsdl:documentation>
       <wsdl:input message="tns:gerarBlocoRequest"/>
       <wsdl:output message="tns:gerarBlocoResponse"/>
+    </wsdl:operation>
+
+    <wsdl:operation name="alterarBloco">
+      <wsdl:documentation>Alteracao de bloco</wsdl:documentation>
+      <wsdl:input message="tns:alterarBlocoRequest"/>
+      <wsdl:output message="tns:alterarBlocoResponse"/>
     </wsdl:operation>
 
     <wsdl:operation name="consultarBloco">
@@ -2296,6 +2338,16 @@
     </wsdl:operation>
 
     <wsdl:operation name="gerarBloco">
+      <soap:operation soapAction="SeiAction" />
+      <wsdl:input>
+        <soap:body namespace="Sei" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body namespace="Sei" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="alterarBloco">
       <soap:operation soapAction="SeiAction" />
       <wsdl:input>
         <soap:body namespace="Sei" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
